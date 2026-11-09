@@ -1,0 +1,46 @@
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+
+# Credenciais e variáveis de ambiente (nunca versionar)
+.env
+*.env
+!.env.example
+# Chaves do Supabase (use env.example.json como modelo)
+env.json
+*.jks
+*.keystore
+key.properties
+android/local.properties
+**/google-services.json
+**/GoogleService-Info.plist
+
+# IDEs e sistema
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Android / iOS gerados
+android/.gradle/
+android/captures/
+android/app/debug
+android/app/profile
+android/app/release
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+**/ios/**/xcuserdata
+
+# Logs
+*.log
