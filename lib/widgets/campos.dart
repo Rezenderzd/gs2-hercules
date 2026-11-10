@@ -38,7 +38,6 @@ class _Rotulo extends StatelessWidget {
   }
 }
 
-/// Campo de texto com borda fina.
 class CampoTexto extends StatelessWidget {
   const CampoTexto({
     super.key,
@@ -63,7 +62,6 @@ class CampoTexto extends StatelessWidget {
   final FormFieldValidator<String>? validar;
   final bool numerico;
 
-  /// Teclado específico (ex.: e-mail). Se nulo, é escolhido pelo contexto.
   final TextInputType? tipo;
   final int linhas;
   final int? maximo;
@@ -105,7 +103,6 @@ class CampoTexto extends StatelessWidget {
   }
 }
 
-/// Escolha única com chips, integrada ao `Form`.
 class CampoEscolha<T> extends FormField<T> {
   CampoEscolha({
     super.key,
@@ -138,7 +135,6 @@ class CampoEscolha<T> extends FormField<T> {
         );
 }
 
-/// Data com botão que abre o calendário, integrada ao `Form`.
 class CampoData extends FormField<DateTime> {
   CampoData({
     super.key,
@@ -168,7 +164,6 @@ class CampoData extends FormField<DateTime> {
         );
 }
 
-/// Caixa de aceite integrada ao `Form`.
 class CampoAceite extends FormField<bool> {
   CampoAceite({super.key, required String texto, super.validator})
       : super(

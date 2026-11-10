@@ -1,4 +1,3 @@
-/// Valor diário de um indicador. [previsto] marca os dias futuros.
 class Ponto {
   const Ponto({required this.dia, required this.valor, this.previsto = false});
 

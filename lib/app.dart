@@ -5,8 +5,6 @@ import 'theme/cores.dart';
 import 'theme/tema_visual.dart';
 import 'widgets/estados.dart';
 
-/// São Paulo Atento já com o Design System: paleta como `ThemeExtension`,
-/// modo claro por padrão e modo escuro em um toque no ícone de lua/sol.
 class SaoPauloAtentoApp extends StatefulWidget {
   const SaoPauloAtentoApp({super.key});
 

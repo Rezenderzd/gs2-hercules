@@ -1,4 +1,3 @@
-/// Formatação brasileira de números e datas, sem pacotes externos.
 abstract final class Formato {
   static const _diasSemana = [
     'segunda',
@@ -14,7 +13,6 @@ abstract final class Formato {
     return valor.toStringAsFixed(casas).replaceAll('.', ',');
   }
 
-  /// "38" em vez de "38,0"; mantém uma casa quando há fração ("1,5").
   static String compacto(double valor) {
     return valor == valor.roundToDouble() ? numero(valor, casas: 0) : numero(valor);
   }
@@ -24,7 +22,6 @@ abstract final class Formato {
     return '$sinal${numero(percentual)}%';
   }
 
-  /// Razão de 0 a 1 em porcentagem inteira.
   static String porcento(double razao) => '${(razao * 100).round()}%';
 
   static String dia(DateTime d) => '${_doisDigitos(d.day)}/${_doisDigitos(d.month)}';

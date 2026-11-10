@@ -10,8 +10,6 @@ enum Gravidade {
   final String rotulo;
 }
 
-/// Qualidade da evidência por trás de um alerta. Não é uma probabilidade:
-/// resume a qualidade dos dados e do sinal (veja `fatores`).
 enum NivelQualidade {
   baixa('baixa'),
   media('média'),
@@ -28,9 +26,6 @@ enum NivelQualidade {
   }
 }
 
-/// Alerta gerado pelo `MotorAlertas`. Traz a justificativa ([evidencias]),
-/// a qualidade da evidência e seus [fatores], as [limitacoes] e uma
-/// sugestão. Nunca executa nada: a decisão é sempre de uma pessoa.
 class Alerta {
   const Alerta({
     required this.id,
@@ -47,8 +42,6 @@ class Alerta {
     required this.origem,
   });
 
-  /// Indicador + regra + primeiro dia do episódio: o mesmo enquanto o
-  /// problema durar, para a decisão continuar ligada ao mesmo alerta.
   final String id;
   final Indicador indicador;
   final Gravidade gravidade;
@@ -57,12 +50,10 @@ class Alerta {
   final List<String> evidencias;
   final List<String> limitacoes;
 
-  /// Qualidade da evidência, de 0 a 1 (exibida como nota de 0 a 100).
   final double qualidade;
   final Map<String, double> fatores;
   final String sugestao;
 
-  /// Dia do evento previsto ou do último dado observado.
   final DateTime dataReferencia;
   final Origem origem;
 
@@ -70,6 +61,5 @@ class Alerta {
 
   NivelQualidade get nivelQualidade => NivelQualidade.de(qualidade);
 
-  /// Nota de 0 a 100.
   int get notaQualidade => (qualidade * 100).round();
 }

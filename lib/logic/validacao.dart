@@ -2,7 +2,6 @@ import '../models/limites.dart';
 import '../util/formato.dart';
 import 'privacidade.dart';
 
-/// Regras dos formulários: cada função devolve a mensagem de erro ou `null`.
 abstract final class Validacao {
   static const int descricaoMinima = 20;
   static const int descricaoMaxima = 300;
@@ -10,7 +9,6 @@ abstract final class Validacao {
 
   static final RegExp _formatoEmail = RegExp(r'^[\w.+-]+@[\w-]+(\.[\w-]+)+$');
 
-  /// E-mail de identificação: só conferimos o formato (não há confirmação).
   static String? email(String? valor) {
     final texto = valor?.trim() ?? '';
     if (texto.isEmpty) return 'Informe seu e-mail.';
@@ -53,7 +51,6 @@ abstract final class Validacao {
     return marcado == true ? null : mensagem;
   }
 
-  /// Aceita "38,5" ou "38.5".
   static double? lerNumero(String? valor) {
     final texto = valor?.trim().replaceAll(',', '.') ?? '';
     if (texto.isEmpty) return null;

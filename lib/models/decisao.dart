@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Decisão humana sobre um alerta. O app só registra; não executa ações.
-///
-/// No Supabase, cada decisão vira uma linha da tabela `decisoes`, e as views
-/// `em_analise`, `aprovados` e `recusados` separam as três situações. Só
-/// gestores cadastrados decidem.
 enum Decisao {
   aguardando('Aguardando decisão', Icons.hourglass_top),
   emAnalise('Em análise', Icons.manage_search),
@@ -16,7 +11,6 @@ enum Decisao {
   final String rotulo;
   final IconData icone;
 
-  /// Valor gravado no banco (coluna `decisao`).
   String get codigo => switch (this) {
         Decisao.aguardando => 'aguardando',
         Decisao.emAnalise => 'em_analise',
@@ -29,9 +23,6 @@ enum Decisao {
   }
 }
 
-/// Decisão registrada por um gestor. Não guarda o e-mail de quem decidiu:
-/// [minha] diz se foi a pessoa que está usando o app; [pendente], se ainda
-/// não chegou à nuvem.
 class RegistroDecisao {
   const RegistroDecisao({
     required this.alertaId,
@@ -44,7 +35,6 @@ class RegistroDecisao {
     this.pendente = false,
   });
 
-  /// Linha do SQLite local ou da função `listar_decisoes` do Supabase.
   factory RegistroDecisao.deLinha(Map<String, Object?> linha) {
     return RegistroDecisao(
       alertaId: linha['alerta_id'] as String,

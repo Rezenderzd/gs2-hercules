@@ -5,7 +5,6 @@ import '../models/serie.dart';
 import 'regras/regra_anomalia.dart';
 import 'regras/regra_previsao.dart';
 
-/// Linha de referência desenhada no gráfico de um indicador.
 class Referencia {
   const Referencia(this.valores, this.rotulo);
 
@@ -13,10 +12,6 @@ class Referencia {
   final String rotulo;
 }
 
-/// Gera os alertas do território. Não faz I/O: recebe as séries e os
-/// limites e devolve alertas explicáveis, ordenados por gravidade e pela
-/// qualidade da evidência. Cada indicador usa uma das duas regras
-/// (`RegraPrevisao` ou `RegraAnomalia`).
 class MotorAlertas {
   const MotorAlertas();
 
@@ -39,15 +34,11 @@ class MotorAlertas {
     return alertas;
   }
 
-  /// Escore z da média recente; `null` com histórico curto ou em
-  /// indicadores avaliados por previsão.
   double? escoreRecente(Serie serie) {
     if (serie.indicador.regra != RegraAlerta.anomalia) return null;
     return RegraAnomalia.atual(serie)?.escore;
   }
 
-  /// Linha(s) de referência do gráfico: o limite absoluto (clima) ou a
-  /// faixa a partir da qual a média recente fica fora do padrão.
   Referencia? referencia(Serie serie, Limites limites) {
     switch (serie.indicador.regra) {
       case RegraAlerta.limitePrevisto:

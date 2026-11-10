@@ -4,7 +4,6 @@ import '../models/serie.dart';
 import 'estatistica.dart';
 import 'regras/regra_anomalia.dart';
 
-/// Faixas do Índice de Atenção.
 enum NivelAtencao {
   tranquilo('Tranquilo', 0),
   atencao('Atenção', 40),
@@ -14,7 +13,6 @@ enum NivelAtencao {
 
   final String rotulo;
 
-  /// Menor índice da faixa.
   final double piso;
 
   static NivelAtencao de(double indice) {
@@ -22,15 +20,12 @@ enum NivelAtencao {
   }
 }
 
-/// Quanto um indicador está pressionado, de 0 (normal) a 100.
 class Pressao {
   const Pressao({required this.indicador, required this.valor});
 
   final Indicador indicador;
   final double valor;
 
-  /// Previsão: o maior valor entre hoje e os próximos 3 dias, em relação ao
-  /// limite. Vale 0 em 60% do limite e 100 no limite.
   static double? daPrevisao(Serie serie, Limites limites) {
     final limite = limites.limiteDe(serie.indicador.id);
     if (limite == null || limite <= 0) return null;
@@ -43,9 +38,6 @@ class Pressao {
     return ((maior / limite - 0.6) / 0.4 * 100).clamp(0.0, 100.0).toDouble();
   }
 
-  /// Anomalia: 30 com a média no padrão, 70 quando o escore atinge o limite
-  /// configurado (é quando nasce o alerta). Só conta o sentido que importa
-  /// para o indicador.
   static double? daAnomalia(Serie serie, Limites limites) {
     final escore = RegraAnomalia.atual(serie)?.escore;
     if (escore == null) return null;
@@ -66,8 +58,6 @@ class Pressao {
   }
 }
 
-/// Índice de Atenção (0–100): a média simples das pressões. Transparente e
-/// fácil de conferir; o detalhe de cada indicador fica no painel.
 abstract final class IndiceAtencao {
   static List<Pressao> pressoes(List<Serie> series, Limites limites) {
     return [

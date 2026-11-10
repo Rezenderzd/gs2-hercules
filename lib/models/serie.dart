@@ -3,7 +3,6 @@ import 'indicador.dart';
 import 'origem.dart';
 import 'ponto.dart';
 
-/// Série diária de um indicador: dias observados + dias previstos.
 class Serie {
   const Serie({
     required this.indicador,
@@ -25,7 +24,6 @@ class Serie {
 
   Ponto? get ultimo => observados.lastOrNull;
 
-  /// Últimos [dias] observados + todos os previstos.
   List<Ponto> recorte(int dias) {
     final obs = observados;
     final inicio = obs.length > dias ? obs.length - dias : 0;
@@ -36,7 +34,6 @@ class Serie {
     final hoje = Datas.soDia(agora);
     return Serie(
       indicador: indicador,
-      // Ao ler um cache antigo, previsões que já passaram são descartadas.
       pontos: pontos.where((p) => !p.previsto || p.dia.isAfter(hoje)).toList(),
       origem: novaOrigem,
       atualizadaEm: quando,
@@ -48,7 +45,6 @@ class Serie {
         'pontos': pontos.map((p) => p.paraMapa()).toList(),
       };
 
-  /// `null` se o indicador salvo não existir mais no catálogo.
   static Serie? deMapa(
     Map<String, dynamic> mapa, {
     required Origem origem,

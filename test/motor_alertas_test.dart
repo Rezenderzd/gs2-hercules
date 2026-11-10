@@ -15,8 +15,6 @@ final agora = DateTime(2026, 11, 8, 9);
 const motor = MotorAlertas();
 const limites = Limites.padrao;
 
-/// Série com [observados] (o último é o dia de [em]) e [previstos] (a partir
-/// do dia seguinte).
 Serie serie(
   Indicador indicador, {
   required List<double> observados,
@@ -38,7 +36,6 @@ Serie serie(
   );
 }
 
-/// Base que alterna dois valores (desvio conhecido) seguida de um pico.
 List<double> comPico(double a, double b, double pico, {int base = 24}) => [
       for (var i = 0; i < base; i++) i.isEven ? a : b,
       pico,
@@ -105,7 +102,6 @@ void main() {
 
   group('Regra de anomalia (escore z da média)', () {
     test('subida acima de z = 2 gera alerta de atenção', () {
-      // Base 10/12 (desvio ≈ 1,02); média de 3 dias em 12,5 → z ≈ 2,5.
       final alertas = motor.avaliar(
         series: [serie(Indicadores.descarte, observados: comPico(10, 12, 12.5))],
         limites: limites,

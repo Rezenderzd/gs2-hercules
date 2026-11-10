@@ -1,4 +1,3 @@
-/// Faixa aceita por um limite configurável (usada na validação).
 class Faixa {
   const Faixa(this.minimo, this.maximo);
 
@@ -8,7 +7,6 @@ class Faixa {
   bool contem(double v) => v >= minimo && v <= maximo;
 }
 
-/// Limites que disparam alertas. Definidos por pessoas em Ajustes.
 class Limites {
   const Limites({
     required this.sensacaoC,
@@ -37,19 +35,14 @@ class Limites {
   static const faixaChuva = Faixa(10, 200);
   static const faixaEscoreZ = Faixa(1.5, 4);
 
-  /// Sensação térmica máxima prevista (°C).
   final double sensacaoC;
 
-  /// Índice UV máximo previsto.
   final double uv;
 
-  /// Chuva prevista em um dia (mm).
   final double chuvaMm;
 
-  /// Quantos desvios padrão acima do normal caracterizam uma anomalia.
   final double escoreZ;
 
-  /// Limite absoluto dos indicadores avaliados por previsão.
   double? limiteDe(String indicadorId) {
     return switch (indicadorId) {
       'sensacao' => sensacaoC,

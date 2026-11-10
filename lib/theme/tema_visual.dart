@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'cores.dart';
 import 'espacos.dart';
 
-/// Tema a partir das [Cores]: superfícies planas, bordas finas e tipografia
-/// com bastante respiro.
 abstract final class TemaVisual {
   static ThemeData criar(Cores cores) {
     final base = ThemeData(brightness: cores.brilho, useMaterial3: true);

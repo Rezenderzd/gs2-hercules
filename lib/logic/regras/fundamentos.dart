@@ -3,24 +3,18 @@ import '../../models/serie.dart';
 import '../../util/formato.dart';
 import '../estatistica.dart';
 
-/// Partes comuns às duas regras de alerta.
 abstract final class Fundamentos {
-  /// Nome do fator ligado à procedência dos dados.
   static const fatorFonte = 'Fonte dos dados';
 
-  /// Qualidade da evidência: média dos [fatores] × peso da fonte, entre 5%
-  /// e 95% (nenhum alerta é "certeza").
   static double qualidade(Map<String, double> fatores, Origem origem) {
     final media = Amostra(fatores.values).media;
     return (media * origem.fatorQualidade).clamp(0.05, 0.95).toDouble();
   }
 
-  /// Os fatores exibidos na tela: os da regra e o da fonte.
   static Map<String, double> comFonte(Map<String, double> fatores, Origem origem) {
     return {...fatores, fatorFonte: origem.fatorQualidade};
   }
 
-  /// O que a procedência dos dados limita na análise.
   static List<String> limitacoesDaFonte(Serie serie, DateTime agora) {
     final idadeCache = agora.difference(serie.atualizadaEm);
     return switch (serie.origem) {
@@ -36,7 +30,6 @@ abstract final class Fundamentos {
     };
   }
 
-  /// Sugestão para a equipe. [queda] distingue a falta de coleta do excesso.
   static String sugestao(String indicadorId, {bool queda = false}) {
     if (indicadorId == 'coleta') {
       return queda

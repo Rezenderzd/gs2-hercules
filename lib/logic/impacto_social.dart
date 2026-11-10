@@ -5,8 +5,6 @@ import '../models/indicador.dart';
 import '../util/datas.dart';
 import 'estatistica.dart';
 
-/// Indicadores de benefício social: ligam o desempenho dos alertas ao que
-/// eles significam para quem vive no território.
 class ImpactoSocial {
   const ImpactoSocial({
     required this.moradores,
@@ -48,7 +46,6 @@ class ImpactoSocial {
   final int alertas;
   final int decididos;
 
-  /// Dias, em média, entre o alerta e o evento previsto.
   final double? antecedenciaMedia;
   final int relatos;
 

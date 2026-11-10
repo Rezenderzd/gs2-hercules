@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../theme/cores.dart';
 import '../theme/espacos.dart';
 
-/// Estados de tela: carregando, erro e vazio. Sem ilustrações pesadas —
-/// um ícone, uma frase e, quando faz sentido, uma ação.
 class EstadoTela extends StatelessWidget {
   const EstadoTela._({
     required this.icone,
@@ -78,7 +76,6 @@ class EstadoTela extends StatelessWidget {
   }
 }
 
-/// Centraliza um [EstadoTela] quando ele ocupa a tela inteira.
 class Centralizado extends StatelessWidget {
   const Centralizado({super.key, required this.child});
 

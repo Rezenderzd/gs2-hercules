@@ -32,10 +32,6 @@ enum Urgencia {
   }
 }
 
-/// Relato de um cidadão. Não guarda e-mail, nome, telefone, CPF nem GPS:
-/// o bairro é a menor localização registrada. [meu] diz se foi a pessoa
-/// que está usando o app quem enviou; [pendente], se ainda não chegou à
-/// nuvem.
 class Relato {
   const Relato({
     required this.id,
@@ -49,7 +45,6 @@ class Relato {
     this.pendente = false,
   });
 
-  /// Linha do SQLite local ou da função `listar_relatos` do Supabase.
   factory Relato.deLinha(Map<String, Object?> linha) {
     return Relato(
       id: linha['id'] as String,
@@ -88,7 +83,6 @@ class Relato {
     );
   }
 
-  /// Campos enviados à nuvem (datas em UTC, padrão ISO).
   Map<String, Object?> paraNuvem() => {
         'id': id,
         'categoria': categoria.name,
@@ -99,8 +93,6 @@ class Relato {
         'criado_em': criadoEm.toUtc().toIso8601String(),
       };
 
-  /// Linha do SQLite local. [autorEmail] só é guardado enquanto o relato
-  /// está pendente (é preciso para reenviar) e é apagado ao sincronizar.
   Map<String, Object?> paraLinhaLocal({required bool sincronizado, String? autorEmail}) => {
         ...paraNuvem(),
         'meu': meu ? 1 : 0,
@@ -111,7 +103,6 @@ class Relato {
   static bool _verdadeiro(Object? valor) => valor == true || valor == 1;
 }
 
-/// O que a pessoa preencheu no formulário, antes de anonimizar e salvar.
 class RascunhoRelato {
   const RascunhoRelato({
     required this.categoria,

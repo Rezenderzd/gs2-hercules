@@ -8,12 +8,9 @@ import '../../util/datas.dart';
 import '../../util/formato.dart';
 import 'fundamentos.dart';
 
-/// Regra 1 — calor e clima: algum dia da previsão oficial (Open-Meteo)
-/// atinge o limite definido pelos gestores.
 class RegraPrevisao {
   const RegraPrevisao();
 
-  /// Pico a partir do qual o alerta é crítico (15% acima do limite).
   static const double fatorCritico = 1.15;
 
   Alerta? avaliar(Serie serie, Limites limites, DateTime agora) {
@@ -38,7 +35,6 @@ class RegraPrevisao {
     };
 
     return Alerta(
-      // Primeiro dia previsto no limite: estável enquanto a previsão se mantiver.
       id: '${indicador.id}-previsao-${Datas.iso(primeiro.dia)}',
       indicador: indicador,
       gravidade: proporcao >= fatorCritico ? Gravidade.critico : Gravidade.atencao,

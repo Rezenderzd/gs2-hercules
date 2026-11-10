@@ -9,32 +9,23 @@ import '../../util/formato.dart';
 import '../estatistica.dart';
 import 'fundamentos.dart';
 
-/// Recorte da série para a regra de anomalia: os dias recentes e a base
-/// histórica imediatamente anterior a eles.
 class Janela {
   Janela._(this.recentes, this.base);
 
   final Amostra recentes;
   final Amostra base;
 
-  /// Escore z da média recente (veja `Amostra.escoreDaMedia`).
   late final double escore = base.escoreDaMedia(recentes);
 }
 
-/// Regra 2 — mobilidade e limpeza: a média dos últimos [diasRecentes] dias
-/// foge do padrão dos [diasBase] dias anteriores, no sentido que importa
-/// para o indicador (`SentidoAnomalia`).
 class RegraAnomalia {
   const RegraAnomalia();
 
   static const int diasRecentes = 3;
   static const int diasBase = 21;
 
-  /// Com menos dias de base, a regra não avalia.
   static const int baseMinima = 10;
 
-  /// Janela cujos dias recentes terminam no índice [fim] de [valores].
-  /// `null` se não houver base suficiente antes dela.
   static Janela? janela(List<double> valores, int fim) {
     final inicioRecentes = fim - diasRecentes + 1;
     if (fim >= valores.length || inicioRecentes - baseMinima < 0) return null;
@@ -45,13 +36,11 @@ class RegraAnomalia {
     );
   }
 
-  /// Janela mais recente da série, ou `null` com histórico curto.
   static Janela? atual(Serie serie) {
     final valores = serie.valoresObservados;
     return janela(valores, valores.length - 1);
   }
 
-  /// O escore está fora do padrão no sentido do indicador?
   static bool foraDoPadrao(double escore, SentidoAnomalia sentido, double limite) {
     return switch (sentido) {
       SentidoAnomalia.alta => escore >= limite,
@@ -71,8 +60,6 @@ class RegraAnomalia {
     if (!foraDoPadrao(escore, indicador.sentido, limites.escoreZ)) return null;
     final subiu = escore > 0;
 
-    // Recua enquanto o desvio continua, no mesmo sentido: o id do alerta usa
-    // o primeiro dia do episódio e não muda enquanto o problema durar.
     var inicio = valores.length - 1;
     while (true) {
       final anterior = janela(valores, inicio - 1);
@@ -96,7 +83,6 @@ class RegraAnomalia {
       'Histórico disponível': (valores.length / 24).clamp(0.4, 1.0).toDouble(),
       'Estabilidade da base': (1 - ruido).clamp(0.3, 1.0).toDouble(),
       'Força do sinal': (intensidade / (2 * limites.escoreZ)).clamp(0.5, 1.0).toDouble(),
-      // MAPE de 0% vale 1; de 50% ou mais, o mínimo.
       'Acerto da projeção (MAPE)':
           projecao.mape == null ? 0.6 : (1 - projecao.mape! / 50).clamp(0.3, 1.0).toDouble(),
     };
@@ -137,8 +123,6 @@ class RegraAnomalia {
     );
   }
 
-  /// Valores diários a partir dos quais a média de [diasRecentes] dias fica
-  /// fora do padrão (base ± escoreZ × desvio ÷ √n). Usados no gráfico.
   static List<double> faixaDoPadrao(Serie serie, Limites limites) {
     final ultima = atual(serie);
     if (ultima == null) return const [];

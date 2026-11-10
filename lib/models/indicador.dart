@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Os três dashboards do São Paulo Atento.
 enum Tema {
   calor(
     'Calor e clima',
@@ -25,12 +24,9 @@ enum Tema {
   final IconData icone;
 }
 
-/// Como os alertas de um indicador são gerados.
 enum RegraAlerta {
-  /// Algum dia previsto atinge o limite configurado.
   limitePrevisto('Previsão acima do limite'),
 
-  /// A média dos últimos dias foge do padrão histórico (escore z da média).
   anomalia('Anomalia em relação ao padrão');
 
   const RegraAlerta(this.rotulo);
@@ -38,16 +34,11 @@ enum RegraAlerta {
   final String rotulo;
 }
 
-/// Em que direção um desvio do padrão é problema.
 enum SentidoAnomalia {
-  /// Só subidas (ex.: lotação, sinistros).
   alta('acima'),
 
-  /// Só quedas.
   baixa('abaixo'),
 
-  /// Subidas e quedas (ex.: coleta: cair indica falha na coleta; subir,
-  /// lixo acumulado).
   ambos('fora');
 
   const SentidoAnomalia(this.rotulo);
@@ -79,11 +70,9 @@ class Indicador {
   final RegraAlerta regra;
   final int casas;
 
-  /// Usado só pela regra de anomalia.
   final SentidoAnomalia sentido;
 }
 
-/// Catálogo dos oito indicadores acompanhados.
 abstract final class Indicadores {
   static const _openMeteo = 'Open-Meteo (dados reais)';
   static const _simulacao = 'Simulação local (dados sintéticos)';

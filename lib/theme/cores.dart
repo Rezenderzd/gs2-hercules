@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Paleta enxuta do São Paulo Atento, distribuída como `ThemeExtension`
-/// (Aula 18). Uma única cor de destaque; as cores de estado aparecem só em
-/// pequenos pontos, para não poluir a tela.
 @immutable
 class Cores extends ThemeExtension<Cores> {
   const Cores({
@@ -33,7 +30,6 @@ class Cores extends ThemeExtension<Cores> {
 
   static Cores de(BuildContext context) => Theme.of(context).extension<Cores>() ?? claro;
 
-  /// Modo claro (padrão). Texto e cores de destaque com contraste ≥ 4,5:1.
   static const claro = Cores(
     brilho: Brightness.light,
     fundo: Color(0xFFFAFAF9),
@@ -48,7 +44,6 @@ class Cores extends ThemeExtension<Cores> {
     critico: Color(0xFFB91C1C),
   );
 
-  /// Modo escuro, opcional em Ajustes.
   static const escuro = Cores(
     brilho: Brightness.dark,
     fundo: Color(0xFF0C0A09),
@@ -63,7 +58,6 @@ class Cores extends ThemeExtension<Cores> {
     critico: Color(0xFFF87171),
   );
 
-  /// Alto contraste, claro: texto preto e cores escuras (contraste ≥ 7:1).
   static const altoContrasteClaro = Cores(
     brilho: Brightness.light,
     fundo: Color(0xFFFFFFFF),
@@ -78,7 +72,6 @@ class Cores extends ThemeExtension<Cores> {
     critico: Color(0xFF7F1D1D),
   );
 
-  /// Alto contraste, escuro: texto branco sobre preto (contraste ≥ 7:1).
   static const altoContrasteEscuro = Cores(
     brilho: Brightness.dark,
     fundo: Color(0xFF000000),
@@ -93,7 +86,6 @@ class Cores extends ThemeExtension<Cores> {
     critico: Color(0xFFFCA5A5),
   );
 
-  /// Paleta para a combinação de modo escuro e alto contraste.
   static Cores para({required bool escuro, required bool altoContraste}) {
     if (altoContraste) return escuro ? altoContrasteEscuro : altoContrasteClaro;
     return escuro ? Cores.escuro : claro;
