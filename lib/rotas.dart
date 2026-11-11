@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'models/indicador.dart';
+import 'screens/indicador_screen.dart';
+import 'screens/paineis/painel_limpeza_screen.dart';
+import 'screens/paineis/painel_mobilidade_screen.dart';
+import 'screens/paineis/painel_calor_screen.dart';
+import 'screens/inicio_screen.dart';
 import 'screens/entrar_screen.dart';
 import 'screens/boas_vindas_screen.dart';
 import 'screens/moldura_screen.dart';
@@ -63,7 +68,7 @@ GoRouter criarRotas(PreferenciasStore preferencias) {
       StatefulShellRoute.indexedStack(
         builder: (context, state, navegacao) => MolduraScreen(navegacao: navegacao),
         branches: [
-          StatefulShellBranch(routes: [aba('/', Rotas.inicio, (c, s) => const _EmConstrucao('Início'))]),
+          StatefulShellBranch(routes: [aba('/', Rotas.inicio, (c, s) => const InicioScreen())]),
           StatefulShellBranch(routes: [aba('/alertas', Rotas.alertas, (c, s) => const _EmConstrucao('Alertas'))]),
           StatefulShellBranch(routes: [aba('/relatos', Rotas.relatos, (c, s) => const _EmConstrucao('Relatos'))]),
           StatefulShellBranch(routes: [aba('/ajustes', Rotas.ajustes, (c, s) => const _EmConstrucao('Ajustes'))]),
@@ -72,22 +77,22 @@ GoRouter criarRotas(PreferenciasStore preferencias) {
       GoRoute(
         path: '/painel/calor',
         name: Rotas.painelCalor,
-        builder: (context, state) => const _EmConstrucao('Calor e clima'),
+        builder: (context, state) => const PainelCalorScreen(),
       ),
       GoRoute(
         path: '/painel/mobilidade',
         name: Rotas.painelMobilidade,
-        builder: (context, state) => const _EmConstrucao('Mobilidade'),
+        builder: (context, state) => const PainelMobilidadeScreen(),
       ),
       GoRoute(
         path: '/painel/limpeza',
         name: Rotas.painelLimpeza,
-        builder: (context, state) => const _EmConstrucao('Limpeza urbana'),
+        builder: (context, state) => const PainelLimpezaScreen(),
       ),
       GoRoute(
         path: '/indicador/:id',
         name: Rotas.indicador,
-        builder: (context, state) => const _EmConstrucao('Indicador'),
+        builder: (context, state) => IndicadorScreen(indicadorId: state.pathParameters['id'] ?? ''),
       ),
       GoRoute(
         path: '/alerta/:id',
