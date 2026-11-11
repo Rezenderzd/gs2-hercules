@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'models/indicador.dart';
+import 'screens/entrar_screen.dart';
+import 'screens/boas_vindas_screen.dart';
 import 'screens/moldura_screen.dart';
 import 'screens/nao_encontrada_screen.dart';
 import 'state/preferencias_store.dart';
@@ -37,17 +39,26 @@ GoRouter criarRotas(PreferenciasStore preferencias) {
   return GoRouter(
     initialLocation: '/',
     refreshListenable: preferencias,
+    redirect: (context, state) {
+      final local = state.matchedLocation;
+      if (!preferencias.aceitou) return local == '/boas-vindas' ? null : '/boas-vindas';
+      if (local == '/boas-vindas') return '/';
+      if (local == '/novo-relato' && !preferencias.entrou) {
+        return '/entrar?de=${Rotas.novoRelato}';
+      }
+      return null;
+    },
     errorBuilder: (context, state) => const NaoEncontradaScreen(),
     routes: [
       GoRoute(
         path: '/boas-vindas',
         name: Rotas.boasVindas,
-        builder: (context, state) => const _EmConstrucao('Boas-vindas'),
+        builder: (context, state) => const BoasVindasScreen(),
       ),
       GoRoute(
         path: '/entrar',
         name: Rotas.entrar,
-        builder: (context, state) => const _EmConstrucao('Entrar'),
+        builder: (context, state) => EntrarScreen(destino: state.uri.queryParameters['de']),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navegacao) => MolduraScreen(navegacao: navegacao),
