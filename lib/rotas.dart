@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import 'models/indicador.dart';
 import 'screens/moldura_screen.dart';
+import 'screens/nao_encontrada_screen.dart';
 import 'state/preferencias_store.dart';
 
 abstract final class Rotas {
@@ -36,7 +37,7 @@ GoRouter criarRotas(PreferenciasStore preferencias) {
   return GoRouter(
     initialLocation: '/',
     refreshListenable: preferencias,
-    errorBuilder: (context, state) => const _EmConstrucao('Página não encontrada'),
+    errorBuilder: (context, state) => const NaoEncontradaScreen(),
     routes: [
       GoRoute(
         path: '/boas-vindas',
