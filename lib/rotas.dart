@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'models/indicador.dart';
+import 'screens/novo_relato_screen.dart';
+import 'screens/relatos_screen.dart';
 import 'screens/alerta_screen.dart';
 import 'screens/alertas_screen.dart';
 import 'screens/indicador_screen.dart';
@@ -72,7 +74,7 @@ GoRouter criarRotas(PreferenciasStore preferencias) {
         branches: [
           StatefulShellBranch(routes: [aba('/', Rotas.inicio, (c, s) => const InicioScreen())]),
           StatefulShellBranch(routes: [aba('/alertas', Rotas.alertas, (c, s) => const AlertasScreen())]),
-          StatefulShellBranch(routes: [aba('/relatos', Rotas.relatos, (c, s) => const _EmConstrucao('Relatos'))]),
+          StatefulShellBranch(routes: [aba('/relatos', Rotas.relatos, (c, s) => const RelatosScreen())]),
           StatefulShellBranch(routes: [aba('/ajustes', Rotas.ajustes, (c, s) => const _EmConstrucao('Ajustes'))]),
         ],
       ),
@@ -104,7 +106,7 @@ GoRouter criarRotas(PreferenciasStore preferencias) {
       GoRoute(
         path: '/novo-relato',
         name: Rotas.novoRelato,
-        builder: (context, state) => const _EmConstrucao('Novo relato'),
+        builder: (context, state) => const NovoRelatoScreen(),
       ),
       GoRoute(
         path: '/limites',
