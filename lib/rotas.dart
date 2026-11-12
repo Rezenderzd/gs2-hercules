@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'models/indicador.dart';
+import 'screens/alerta_screen.dart';
+import 'screens/alertas_screen.dart';
 import 'screens/indicador_screen.dart';
 import 'screens/paineis/painel_limpeza_screen.dart';
 import 'screens/paineis/painel_mobilidade_screen.dart';
@@ -69,7 +71,7 @@ GoRouter criarRotas(PreferenciasStore preferencias) {
         builder: (context, state, navegacao) => MolduraScreen(navegacao: navegacao),
         branches: [
           StatefulShellBranch(routes: [aba('/', Rotas.inicio, (c, s) => const InicioScreen())]),
-          StatefulShellBranch(routes: [aba('/alertas', Rotas.alertas, (c, s) => const _EmConstrucao('Alertas'))]),
+          StatefulShellBranch(routes: [aba('/alertas', Rotas.alertas, (c, s) => const AlertasScreen())]),
           StatefulShellBranch(routes: [aba('/relatos', Rotas.relatos, (c, s) => const _EmConstrucao('Relatos'))]),
           StatefulShellBranch(routes: [aba('/ajustes', Rotas.ajustes, (c, s) => const _EmConstrucao('Ajustes'))]),
         ],
@@ -97,7 +99,7 @@ GoRouter criarRotas(PreferenciasStore preferencias) {
       GoRoute(
         path: '/alerta/:id',
         name: Rotas.alerta,
-        builder: (context, state) => const _EmConstrucao('Alerta'),
+        builder: (context, state) => AlertaScreen(alertaId: state.pathParameters['id'] ?? ''),
       ),
       GoRoute(
         path: '/novo-relato',
