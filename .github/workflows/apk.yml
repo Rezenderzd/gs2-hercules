@@ -1,0 +1,67 @@
+name: Gerar APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Criar a pasta android (se ainda não estiver no repositório)
+        run: |
+          if [ ! -d android ]; then
+            flutter create --platforms=android --org br.com.fiap .
+          fi
+
+      - name: Garantir permissão de internet no APK
+        run: |
+          MANIFESTO=android/app/src/main/AndroidManifest.xml
+          if ! grep -q 'android.permission.INTERNET' "$MANIFESTO"; then
+            sed -i '0,/<application/s##<uses-permission android:name="android.permission.INTERNET"/>\n    <application#' "$MANIFESTO"
+          fi
+
+      - run: flutter pub get
+
+      - name: Instalar SQLite para os testes
+        run: sudo apt-get update && sudo apt-get install -y libsqlite3-dev
+
+      - name: Testes automatizados
+        run: flutter test
+        continue-on-error: true
+
+      - name: Compilar APK de release
+        run: >
+          flutter build apk --release
+          --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }}
+          --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
+
+      - name: Guardar o APK como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: sao-paulo-atento-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Publicar em Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-${{ github.run_number }}
+          name: São Paulo Atento — APK ${{ github.run_number }}
+          body: APK de release gerado automaticamente pelo GitHub Actions.
+          files: build/app/outputs/flutter-apk/app-release.apk
