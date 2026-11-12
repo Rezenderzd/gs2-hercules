@@ -1,20 +1,22 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'models/indicador.dart';
-import 'screens/novo_relato_screen.dart';
-import 'screens/relatos_screen.dart';
+import 'screens/ajustes_screen.dart';
 import 'screens/alerta_screen.dart';
 import 'screens/alertas_screen.dart';
-import 'screens/indicador_screen.dart';
-import 'screens/paineis/painel_limpeza_screen.dart';
-import 'screens/paineis/painel_mobilidade_screen.dart';
-import 'screens/paineis/painel_calor_screen.dart';
-import 'screens/inicio_screen.dart';
-import 'screens/entrar_screen.dart';
 import 'screens/boas_vindas_screen.dart';
+import 'screens/entrar_screen.dart';
+import 'screens/indicador_screen.dart';
+import 'screens/inicio_screen.dart';
+import 'screens/limites_screen.dart';
 import 'screens/moldura_screen.dart';
 import 'screens/nao_encontrada_screen.dart';
+import 'screens/novo_relato_screen.dart';
+import 'screens/paineis/painel_calor_screen.dart';
+import 'screens/paineis/painel_limpeza_screen.dart';
+import 'screens/paineis/painel_mobilidade_screen.dart';
+import 'screens/relatos_screen.dart';
+import 'screens/sobre_screen.dart';
 import 'state/preferencias_store.dart';
 
 abstract final class Rotas {
@@ -75,7 +77,7 @@ GoRouter criarRotas(PreferenciasStore preferencias) {
           StatefulShellBranch(routes: [aba('/', Rotas.inicio, (c, s) => const InicioScreen())]),
           StatefulShellBranch(routes: [aba('/alertas', Rotas.alertas, (c, s) => const AlertasScreen())]),
           StatefulShellBranch(routes: [aba('/relatos', Rotas.relatos, (c, s) => const RelatosScreen())]),
-          StatefulShellBranch(routes: [aba('/ajustes', Rotas.ajustes, (c, s) => const _EmConstrucao('Ajustes'))]),
+          StatefulShellBranch(routes: [aba('/ajustes', Rotas.ajustes, (c, s) => const AjustesScreen())]),
         ],
       ),
       GoRoute(
@@ -111,27 +113,13 @@ GoRouter criarRotas(PreferenciasStore preferencias) {
       GoRoute(
         path: '/limites',
         name: Rotas.limites,
-        builder: (context, state) => const _EmConstrucao('Limites dos alertas'),
+        builder: (context, state) => const LimitesScreen(),
       ),
       GoRoute(
         path: '/sobre',
         name: Rotas.sobre,
-        builder: (context, state) => const _EmConstrucao('Como funcionam os números'),
+        builder: (context, state) => const SobreScreen(),
       ),
     ],
   );
-}
-
-class _EmConstrucao extends StatelessWidget {
-  const _EmConstrucao(this.titulo);
-
-  final String titulo;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(titulo)),
-      body: const Center(child: Text('Tela em construção')),
-    );
-  }
 }
