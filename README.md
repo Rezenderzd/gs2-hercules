@@ -157,8 +157,8 @@ test/              testes de unidade, de widget e dos repositórios (SQLite em m
 
 ```bash
 # 1. Clonar e entrar na pasta
-git clone https://github.com/<usuario>/sao_paulo_atento.git
-cd sao_paulo_atento
+git clone https://github.com/Rezenderzd/gs2-hercules.git
+cd gs2-hercules
 
 # 2. Criar a pasta web/ para rodar no Chrome (não sobrescreve lib/, test/ nem este README).
 #    A pasta android/ já vem no repositório, com a permissão de internet.
