@@ -3,6 +3,7 @@ name: Gerar APK
 on:
   push:
     branches: [main]
+    tags: ['v*']
   workflow_dispatch:
 
 permissions:
@@ -25,27 +26,16 @@ jobs:
           flutter-version: 3.44.8
           cache: true
 
-      - name: Criar a pasta android (se ainda não estiver no repositório)
-        run: |
-          if [ ! -d android ]; then
-            flutter create --platforms=android --org br.com.fiap .
-          fi
-
-      - name: Garantir permissão de internet no APK
-        run: |
-          MANIFESTO=android/app/src/main/AndroidManifest.xml
-          if ! grep -q 'android.permission.INTERNET' "$MANIFESTO"; then
-            sed -i '0,/<application/s##<uses-permission android:name="android.permission.INTERNET"/>\n    <application#' "$MANIFESTO"
-          fi
-
       - run: flutter pub get
 
       - name: Instalar SQLite para os testes
         run: sudo apt-get update && sudo apt-get install -y libsqlite3-dev
 
+      - name: Análise estática
+        run: flutter analyze
+
       - name: Testes automatizados
         run: flutter test
-        continue-on-error: true
 
       - name: Compilar APK de release
         run: >
@@ -60,9 +50,9 @@ jobs:
           path: build/app/outputs/flutter-apk/app-release.apk
 
       - name: Publicar em Releases
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: apk-${{ github.run_number }}
-          name: São Paulo Atento — APK ${{ github.run_number }}
+          name: São Paulo Atento ${{ github.ref_name }}
           body: APK de release gerado automaticamente pelo GitHub Actions.
           files: build/app/outputs/flutter-apk/app-release.apk

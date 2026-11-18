@@ -1,11 +1,11 @@
 {
-    "name": "recife_atento",
-    "short_name": "recife_atento",
+    "name": "São Paulo Atento",
+    "short_name": "SP Atento",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "São Paulo Atento: o que pede atenção no Centro de São Paulo.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -1,5 +1,9 @@
 # São Paulo Atento
 
+## 1. Identificação
+
+<p align="center"><img src="assets/banner.svg" alt="São Paulo Atento — calor, mobilidade e limpeza urbana no Centro de São Paulo" width="100%"></p>
+
 **App Flutter que mostra, de forma simples, o que pede atenção no Centro de São Paulo: calor, mobilidade e limpeza urbana. Ele resume tudo em um número, gera alertas que explicam a si mesmos e deixa a decisão final sempre com uma pessoa.**
 
 FIAP · Ciência da Computação · Cross-Platform Application Development · Global Solution 2026.2 · desafio *Territory Predictive Insights*
@@ -32,15 +36,15 @@ O Centro de São Paulo (Subprefeitura Sé) sofre com três problemas que costuma
 
 ## 4. Demonstração visual
 
-As capturas ficam em `assets/capturas/`.
+As capturas ficam em `assets/screenshots/`.
 
 | | | |
 |:-:|:-:|:-:|
-| <img src="assets/capturas/01_boas_vindas.png" width="210"><br>Boas-vindas e aceite | <img src="assets/capturas/02_inicio.png" width="210"><br>Início | <img src="assets/capturas/03_painel_calor.png" width="210"><br>Painel Calor e clima |
-| <img src="assets/capturas/04_painel_mobilidade.png" width="210"><br>Painel Mobilidade | <img src="assets/capturas/05_painel_limpeza.png" width="210"><br>Painel Limpeza urbana | <img src="assets/capturas/06_indicador.png" width="210"><br>Indicador |
-| <img src="assets/capturas/07_alertas.png" width="210"><br>Alertas | <img src="assets/capturas/08_alerta.png" width="210"><br>Alerta e decisão | <img src="assets/capturas/09_relatos.png" width="210"><br>Relatos |
-| <img src="assets/capturas/10_novo_relato.png" width="210"><br>Novo relato (validação) | <img src="assets/capturas/11_ajustes.png" width="210"><br>Ajustes | <img src="assets/capturas/12_limites.png" width="210"><br>Limites dos alertas |
-| <img src="assets/capturas/13_sobre.png" width="210"><br>Como funcionam os números | <img src="assets/capturas/14_tablet.png" width="210"><br>Tablet / navegador |
+| <img src="assets/screenshots/01_boas_vindas.png" width="210"><br>Boas-vindas e aceite | <img src="assets/screenshots/02_inicio.png" width="210"><br>Início | <img src="assets/screenshots/03_painel_calor.png" width="210"><br>Painel Calor e clima |
+| <img src="assets/screenshots/04_painel_mobilidade.png" width="210"><br>Painel Mobilidade | <img src="assets/screenshots/05_painel_limpeza.png" width="210"><br>Painel Limpeza urbana | <img src="assets/screenshots/06_indicador.png" width="210"><br>Indicador |
+| <img src="assets/screenshots/07_alertas.png" width="210"><br>Alertas | <img src="assets/screenshots/08_alerta.png" width="210"><br>Alerta e decisão | <img src="assets/screenshots/09_relatos.png" width="210"><br>Relatos |
+| <img src="assets/screenshots/10_novo_relato.png" width="210"><br>Novo relato (validação) | <img src="assets/screenshots/11_ajustes.png" width="210"><br>Ajustes | <img src="assets/screenshots/12_limites.png" width="210"><br>Limites dos alertas |
+| <img src="assets/screenshots/13_sobre.png" width="210"><br>Como funcionam os números | <img src="assets/screenshots/14_tablet.png" width="210"><br>Tablet / navegador | |
 
 ---
 
@@ -67,7 +71,7 @@ As capturas ficam em `assets/capturas/`.
 - [x] **Design System:** paleta como `ThemeExtension`, medidas padronizadas e componentes reutilizáveis
 - [x] **Modo claro por padrão, com modo escuro em um toque no ícone de lua/sol** presente na barra superior de todas as telas, e **alto contraste** em Ajustes
 - [x] **Acessibilidade:** texto até 150%, contraste adequado, descrições para leitor de tela (índice, gráficos, cartões) e áreas de toque de 48 dp
-- [x] **Privacidade:** aceite explícito dizendo onde os dados ficam e quem os vê, e-mail como único dado pessoal (fora das listas públicas; no banco, relatos e decisões guardam um hash), remoção de telefone, e-mail e CPF digitados nas descrições, e exclusão dos dados na nuvem e no aparelho
+- [x] **Privacidade:** aceite explícito dizendo onde os dados ficam e quem os vê, e-mail como único dado pessoal (fora das listas públicas; no banco, relatos e decisões guardam um identificador pseudonimizado), remoção de telefone, e-mail e CPF digitados nas descrições, e exclusão dos dados na nuvem e no aparelho
 - [x] **Abas de decisão** na tela de Alertas: Aguardando, Em análise, Aprovados e Recusados
 - [x] **Benefício social:** moradores acompanhados, antecedência média, alertas avaliados e relatos (no Início e em "Como funcionam os números")
 - [x] Conteúdo centralizado e com largura limitada em tablets e no navegador
@@ -109,11 +113,12 @@ Os dados sintéticos são sempre identificados como "simulados". Para a demonstr
 
 - **Aceite explícito** (LGPD, art. 7º, I) na primeira tela, dizendo **onde os dados ficam** (Supabase, serviço de terceiros na nuvem, mais uma cópia no aparelho) e **quem vê o quê**. O `redirect` do GoRouter bloqueia o resto do app até o aceite.
 - **Minimização:** painéis e alertas abrem sem conta. O e-mail (sem senha nem confirmação) só é pedido para relatar.
-- **O e-mail não circula:** fica só na tabela privada `usuarios`, vista pelos responsáveis no painel do Supabase. Relatos e decisões guardam um `autor_id` (hash SHA-256 do e-mail), e as funções públicas devolvem só "meu"/"minha". O aparelho não guarda e-mail de ninguém além de quem está usando.
+- **O e-mail não circula:** fica só na tabela privada `usuarios`, vista pelos responsáveis no painel do Supabase. Relatos e decisões guardam um `autor_id` (hash SHA-256 do e-mail), e as funções públicas devolvem só "meu"/"minha". Isso é **pseudonimização**, não anonimização: quem já conhece um e-mail consegue calcular o mesmo hash e reconhecê-lo. Por isso o `autor_id` também nunca sai do banco. O aparelho não guarda e-mail de ninguém além de quem está usando.
 - **Sem coleta** de nome, CPF, telefone ou GPS: a localização se resume ao bairro. Dados pessoais digitados nas descrições são barrados na validação e removidos antes de salvar.
 - **Segurança do banco:** RLS ligada e nenhuma permissão direta nas tabelas para a chave pública. Tudo passa por funções (`security definer`) que validam formato, prazos e permissões. Decidir alertas e mudar limites exige estar na tabela `gestores` e informar o PIN (guardado com bcrypt).
 - **Exclusão:** em Ajustes → Apagar meus dados, os seus relatos e o registro do e-mail são apagados na nuvem e no aparelho, e o aceite é revogado. Como não há confirmação de e-mail, **só o aparelho que usou o e-mail primeiro** (titular) pode pedir a exclusão; em outro aparelho, peça aos responsáveis pelo projeto. **Sair da conta** esquece o e-mail; painéis continuam abertos.
-- **Limitação assumida:** sem confirmação de e-mail, qualquer pessoa pode digitar o e-mail de outra para relatar em nome dela. Não consegue, porém, ver dados dela, apagar nada nem decidir alertas. O PIN do gestor fica salvo no aparelho dele.
+- **Limitação assumida:** sem confirmação de e-mail, qualquer pessoa pode digitar o e-mail de outra para relatar em nome dela. Não consegue, porém, ver dados dela, apagar nada nem decidir alertas. O PIN do gestor fica salvo no aparelho dele, sem criptografia local, e não há limite de tentativas: num sistema real, o caminho seria um login com sessão temporária (ex.: Supabase Auth).
+- **Modo local (sem `env.json`):** sem o banco na nuvem não há com quem conferir o PIN. Nesse modo de demonstração, **qualquer pessoa pode decidir alertas e mudar limites**, e tudo fica só naquele aparelho, sem afetar ninguém. O controle de quem é gestor só vale com o Supabase configurado.
 - **Inclusão:** modo claro e escuro, texto até 150%, leitura por leitor de tela, textos do Material em português e funcionamento offline.
 
 ---
@@ -122,7 +127,7 @@ Os dados sintéticos são sempre identificados como "simulados". Para a demonstr
 
 | Escolha | Por quê |
 |---|---|
-| Flutter 3.27+ / Dart 3.5+ | Exigência da disciplina. Records e *patterns* deixam o código enxuto |
+| Flutter 3.44+ / Dart 3.12+ | Exigência da disciplina. Records e *patterns* deixam o código enxuto |
 | go_router | Rotas nomeadas, parâmetros, `StatefulShellRoute` para as abas e `redirect` para o aceite (Aula 18) |
 | ChangeNotifier + InheritedNotifier | Estado global sem pacote extra, no padrão do `DatabaseScope` da Aula 18 |
 | sqflite + sqflite_common_ffi + sqflite_common_ffi_web | SQLite no celular, no desktop e no Chrome, escolhido por import condicional (Aula 18) |
@@ -153,41 +158,39 @@ test/              testes de unidade, de widget e dos repositórios (SQLite em m
 
 ## 9. Como executar
 
-**Pré-requisitos:** Flutter 3.27 ou superior (as aulas usam o 3.44) e Google Chrome, ou um emulador/celular Android.
+**Pré-requisitos:** **Flutter 3.44 ou superior** (Dart 3.12+; o projeto foi testado no Flutter 3.44.8) e Google Chrome, ou um emulador/celular Android. Versões anteriores do Flutter não instalam as dependências. Confira com `flutter --version`.
+
+As pastas `android/`, `web/` e `windows/` já vêm no repositório, inclusive o SQLite para o Chrome (`web/sqlite3.wasm` e `web/sqflite_sw.js`).
 
 ```bash
 # 1. Clonar e entrar na pasta
 git clone https://github.com/Rezenderzd/gs2-hercules.git
 cd gs2-hercules
 
-# 2. Criar a pasta web/ para rodar no Chrome (não sobrescreve lib/, test/ nem este README).
-#    A pasta android/ já vem no repositório, com a permissão de internet.
-flutter create --platforms=web,windows .
-
-# 3. Instalar dependências
+# 2. Instalar dependências
 flutter pub get
 
-# 4. Só para o Chrome: copiar o SQLite em WebAssembly para web/ (uma vez)
-dart run sqflite_common_ffi_web:setup
+# 3. Rodar só no aparelho (sem banco na nuvem)
+flutter run -d chrome
 
-# 5. Rodar (com o banco Supabase — veja "Banco de dados no Supabase" abaixo)
+#    ou com o banco Supabase (veja "Banco de dados no Supabase" abaixo)
 flutter run -d chrome --dart-define-from-file=env.json
 ```
 
-- **Se o `pub get` reclamar do `sqflite_common_ffi_web`:** rode `flutter pub add sqflite_common_ffi_web`.
-- **Aviso "não conseguiu abrir o armazenamento" no Chrome:** faltou o passo 4. Rode o setup, confira se `web/sqlite3.wasm` e `web/sqflite_sw.js` existem, pare o app e rode `flutter run -d chrome` de novo (hot reload não basta). Se continuar, recarregue com Ctrl+Shift+R.
-- **Variáveis de ambiente:** só as do Supabase, no arquivo `env.json` (fora do Git). Sem ele, o app roda normalmente com `flutter run -d chrome`, mas salva relatos e decisões só no aparelho.
+- **Aviso "não conseguiu abrir o armazenamento" no Chrome:** confira se `web/sqlite3.wasm` e `web/sqflite_sw.js` existem. Se faltarem, rode `dart run sqflite_common_ffi_web:setup`, pare o app e rode `flutter run -d chrome` de novo (hot reload não basta). Se continuar, recarregue com Ctrl+Shift+R.
+- **Variáveis de ambiente:** só as do Supabase, no arquivo `env.json` (fora do Git). Sem ele, o app roda normalmente com `flutter run -d chrome`, mas salva relatos e decisões só no aparelho e qualquer pessoa pode decidir alertas (veja "Modo local" na seção 7).
 
 ### Banco de dados no Supabase
 
 1. Crie uma conta em [supabase.com](https://supabase.com) e clique em **New project**. Escolha nome, senha do banco e a região mais próxima (ex.: São Paulo).
 2. No menu lateral, abra **SQL Editor → New query**, cole todo o conteúdo de [`docs/supabase.sql`](docs/supabase.sql) e clique em **Run**. Isso cria as tabelas (`usuarios`, `relatos`, `decisoes`, `gestores`, `limites`), as views `em_analise`, `aprovados` e `recusados`, as funções que o app chama e as regras de segurança.
-3. **Cadastre ao menos um gestor:** no SQL Editor, rode a linha do fim do arquivo trocando o e-mail e o PIN:
+3. **Cadastre ao menos um gestor:** no SQL Editor, rode o comando abaixo trocando o e-mail e o PIN (só números). Rodar de novo com o mesmo e-mail troca o PIN:
    ```sql
    insert into public.gestores (email, pin_hash)
-   values ('gestor@exemplo.com', extensions.crypt('482916', extensions.gen_salt('bf')));
+   values ('gestor@exemplo.com', extensions.crypt('482916', extensions.gen_salt('bf')))
+   on conflict (email) do update set pin_hash = excluded.pin_hash;
    ```
-   No app, entre com esse e-mail e informe o PIN em Ajustes → Área do gestor.
+   No app, entre com esse e-mail e informe o PIN em Ajustes → Área do gestor. Contas normais não precisam de cadastro: qualquer outro e-mail digitado no app já é uma conta de cidadão, que relata mas não decide alertas.
 4. Em **Project Settings → API** (ou **API Keys**), copie a **Project URL** e a chave pública (**anon** ou **publishable**). Nunca use a chave `service_role`/secret no app.
 5. Na raiz do projeto, copie `env.example.json` para `env.json` e preencha:
    ```json
@@ -196,7 +199,7 @@ flutter run -d chrome --dart-define-from-file=env.json
 6. Rode com `flutter run -d chrome --dart-define-from-file=env.json`. Depois de entrar com o e-mail, Ajustes → Conta deve mostrar "Dados na nuvem (Supabase)".
 7. Para ver os dados: **Table Editor** → `relatos`, `decisoes`, `usuarios`, `em_analise`, `aprovados`, `recusados`.
 
-**APK com Supabase:** gere com `flutter build apk --release --dart-define-from-file=env.json`. Pelo GitHub (bônus): crie os secrets `SUPABASE_URL` e `SUPABASE_ANON_KEY` em **Settings → Secrets and variables → Actions**. A cada push na `main`, o workflow [`.github/workflows/apk.yml`](.github/workflows/apk.yml) roda os testes, gera o APK e publica em **Releases**.
+**APK com Supabase:** gere com `flutter build apk --release --dart-define-from-file=env.json`. Pelo GitHub (bônus): crie os secrets `SUPABASE_URL` e `SUPABASE_ANON_KEY` em **Settings → Secrets and variables → Actions**. A cada push na `main`, o workflow [`.github/workflows/apk.yml`](.github/workflows/apk.yml) roda a análise estática e os testes (e para se algum falhar) e gera o APK como artefato. Ao enviar uma tag de versão (ex.: `git tag v1.0.0` e `git push origin v1.0.0`), ele também publica o APK em **Releases**.
 
 **Testes:** `flutter analyze` e `flutter test`.
 

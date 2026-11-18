@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "br.com.fiap.recife_atento"
+    namespace = "br.com.fiap.sao_paulo_atento"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "br.com.fiap.recife_atento"
+        applicationId = "br.com.fiap.sao_paulo_atento"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

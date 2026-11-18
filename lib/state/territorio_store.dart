@@ -217,7 +217,9 @@ class TerritorioStore extends ChangeNotifier {
     try {
       final daNuvem = await _conta.lerLimites().timeout(limiteBanco);
       if (daNuvem != null) await _preferencias.definirLimites(daNuvem);
-    } catch (_) {}
+    } catch (erro) {
+      debugPrint('[Limites] usando a cópia local; a nuvem não respondeu: $erro');
+    }
   }
 
   void _aoMudarPreferencias() {

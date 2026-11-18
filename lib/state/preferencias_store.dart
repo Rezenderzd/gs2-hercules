@@ -85,7 +85,9 @@ class PreferenciasStore extends ChangeNotifier {
       _gestorCadastrado = perfil.gestorCadastrado;
       await _servico.salvarTitular(perfil.titular);
       notifyListeners();
-    } catch (_) {}
+    } catch (erro) {
+      debugPrint('[Conta] não foi possível confirmar a conta na nuvem: $erro');
+    }
   }
 
   Future<bool> entrarComoGestor(String pin) async {

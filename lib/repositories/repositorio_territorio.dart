@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/origem.dart';
@@ -81,7 +82,9 @@ class RepositorioTerritorio {
         },
         conflictAlgorithm: ConflictAlgorithm.replace,
       ).timeout(const Duration(seconds: 4));
-    } catch (_) {}
+    } catch (erro) {
+      debugPrint('[Território] cache do clima não foi salvo: $erro');
+    }
   }
 
   Future<List<Serie>?> _lerCache(DateTime agora) async {
